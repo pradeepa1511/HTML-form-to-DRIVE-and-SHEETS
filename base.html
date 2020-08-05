@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <title>Upload Files</title>
+    
+   
+  </head>
+  <body>
+    <h1>FILL THE DETAILS BELOW:</h1>
+    
+        <form id="myForm" onsubmit="handleFormSubmit(this)">
+        
+        <hr>
+        <label for="name"><b>NAME</b></label>
+        <input type="text" name="name" id="uname" placeholder="Enter name" required>
+        
+        <hr>
+        <label for="empid"><b>EMP_ID</b></label>
+        <input type="number" name="empid" id="empid" placeholder="Enter your id" required>
+        
+        <hr>
+        <label for="emailid"><b>EMAIL</b></label>
+        <input type="email" name="age" id="email" placeholder="Enter email" required>
+        
+        <hr>
+        <label for="role"><b>ROLE</b></label>
+        <input type="text" name="role" id="role" placeholder="Enter your role" required>
+        
+        <hr>
+        <label for="file">UPLOAD FILE:</label>
+        <input type="file" id="files" name="myFile" multiple required>
+        
+        
+        <hr>
+        <input type="button" id="uploadBtn" value="Upload Files">
+        <input type="button" id="submitBtn" value="submit">
+
+        <label id="resp"></label>
+        </form>
+    
+    <script>
+    var folurl;
+    
+      document.getElementById('uploadBtn').addEventListener('click',
+        function(e){
+        
+          google.script.run.withSuccessHandler(onSuccess).uploadFiles(this.parentNode)
+        })
+       
+     
+        function onSuccess(data){
+          document.getElementById('resp').innerHTML = "File Uploaded to the path " +data;
+          window.folurl = data;
+            
+
+     }
+     
+     
+     document.getElementById('submitBtn').addEventListener('click',doStuff);
+        function doStuff() {
+        var name = document.getElementById("uname").value;
+        var mail = document.getElementById("email").value;
+        var empoid = document.getElementById("empid").value;
+        var rolee = document.getElementById("role").value;
+        
+        
+       
+          google.script.run.onClick(name,mail,rolee,empoid,folurl);
+          document.getElementById("uname").value="";
+          document.getElementById("email").value="";
+          document.getElementById("empid").value="";
+          document.getElementById("role").value="";
+       
+        }
+      
+    </script>
+  </body>
+</html>
